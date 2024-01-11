@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: peech
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  profiles:
+    group:
+      local: "local-envs,local-db"
+      dev: "dev-envs,dev-db"
+#      production: "prod-envs,prod-db"
+    active: local
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: true
+    open-in-view: false
+
+---
+# local env
+spring.config.activate.on-profile: local-envs
+
+server:
+  port: 8080
+
+---
+# dev env
+spring.config.activate.on-profile: dev-envs
+
+---
+# local db
+spring.config.activate.on-profile: local-db
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://127.0.0.1:3306/mjbk?serverTimezone=UTC&characterEncoding=UTF-8"
+    username: "root"
+    password: "nextage2020!"
+
+---
+# dev db
+spring.config.activate.on-profile: dev-db
+
